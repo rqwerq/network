@@ -51,17 +51,24 @@ class Network:
             del attribute[(from_nodeid, to_nodeid)]
 
     # 2. 查询
-    def next_nodes(self, nodeid):
+ def next_nodes(self, nodeid):
         return self._neighbours[nodeid]
 
     def prev_nodes(self, nodeid):
-        None
-
+        assert nodeid in self._neighbours
+        key_list=[]
+        value_list=[]
+        for key,value in self._neighbours.items():
+            key_list.append(key)
+            value_list.append(value)
+        if nodeid in value_list:
+            prev_node=value_list.index(nodeid)
+            return prev_node
     def is_connected(self, from_nodeid, to_nodeid):
-        None
+        assert to_nodeid in self._neighbours[from_nodeid]
 
     def nodes(self):
-        return self._neighbours.keys()
+        self._neighbours.keys()
 
     def links(self):
         links = []
@@ -71,7 +78,6 @@ class Network:
                 links.append((cur_node, next_node))
 
         return links
-
     # 3. 属性
     def attributes(self, from_nodeid, to_nodeid):
         None
